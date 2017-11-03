@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>SpringMVC</display-name>
+  <filter>
+  <!-- post提交方式乱码问题的解决 -->
+  <filter-name>MyCode</filter-name>
+  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  <!-- encoding必须设 -->
+  <init-param>
+  	<param-name>encoding</param-name>
+  	<param-value>utf-8</param-value>
+  </init-param>
+  </filter>
+  <filter-mapping>
+   <filter-name>MyCode</filter-name>
+   <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+  <!-- url唯一化必设 -->
+  <filter-name>HiddenHttpMethodFilter</filter-name>
+  <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+  </filter>
+  <filter-mapping>
+   <filter-name>HiddenHttpMethodFilter</filter-name>
+   <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- toncat8.0版本url唯一化需要过滤 -->
+  <!-- <filter>
+  <filter-name>TomcatFilter</filter-name>
+  <filter-class>filter.TomcatFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  <filter-name>TomcatFilter</filter-name>
+  <url-pattern>/*.jsp</url-pattern>
+  </filter-mapping> -->
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- 开启适配器 -->
+  <servlet>
+  <servlet-name>SpringMVC</servlet-name>
+  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  <!-- 设置适配器位置（contextconfiglocation系统默认） -->
+ <init-param>
+ <param-name>contextConfigLocation</param-name>
+ <param-value>classpath:config/mvc.xml</param-value>
+ </init-param>
+  </servlet>
+ 
+  <servlet-mapping>
+   <servlet-name>SpringMVC</servlet-name>
+   <url-pattern>/</url-pattern>
+  </servlet-mapping>
+   <!-- 拦截器，springmvc默认拦截.js和.jsp，设置允许访问 -->
+  <servlet-mapping>
+  <servlet-name>default</servlet-name>
+  <url-pattern>*.js </url-pattern>
+  <url-pattern>*.jpg</url-pattern>
+  </servlet-mapping>
+</web-app>
